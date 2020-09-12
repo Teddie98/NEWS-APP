@@ -18,4 +18,15 @@ def index():
     # science_category = get_sources('science')
     # health_category = get_sources('health')
 
-    
+    title = 'World News Highlights'
+    return render_template('index.html',title = title, general = general_categories)
+
+@main.route('/newsarticle/<id>')
+def newsarticle(id):
+
+    '''
+    View article page function that returns the article details page and its data
+    '''
+    articles_items = get_articles(id)
+    title = f'{id} | News Articles'
+    return render_template('newsarticle.html',title = title,articles = articles_items)
