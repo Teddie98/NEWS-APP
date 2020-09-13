@@ -1,5 +1,6 @@
-import urllib.request,json
-from .models import Sources,Articles
+import urllib.request
+import json
+from .models import Sources, Articles
 
 
 # Getting api key
@@ -9,8 +10,9 @@ api_key = None
 base_url = None
 base_article_url = None
 
+
 def configure_request(app):
-    global api_key,base_url,base_article_url
+    global api_key, base_url, base_article_url
     api_key = app.config['NEWS_API_KEY']
     base_url = app.config['NEWS_API_BASE_URL']
     base_article_url = app.config['ARTICLES_API_BASE_URL']
@@ -34,17 +36,18 @@ def get_sources(category):
 
     return sources_results
 
+
 def process_sources_results(sources_list):
     """
     Function  that processes the sources result and transform them to a list of Objects
-    
+
     Args:
         sources_list: A list of dictionaries that contain sources details
-    
+
     Returns :
         sources_results: A list of source objects
     """
-    
+
     sources_results = []
     for source_item in sources_list:
         id = source_item.get('id')
@@ -56,18 +59,18 @@ def process_sources_results(sources_list):
         country = source_item.get('country')
 
         # if poster:
-        source_object = Sources(id, name, description, url, category, language, country)
+        source_object = Sources(id, name, description,
+                                url, category, language, country)
         sources_results.append(source_object)
 
     return sources_results
-
 
 
 def get_articles(id):
     '''
     Function that gets the json Articles response to our url request
     '''
-    get_articles_url = base_article_url.format(id,api_key)
+    get_articles_url = base_article_url.format(id, api_key)
 
     with urllib.request.urlopen(get_articles_url) as url:
         get_articles_data = url.read()
@@ -81,17 +84,18 @@ def get_articles(id):
 
     return articles_results
 
+
 def process_articles_results(articles_list):
     """
     Function  that processes the articles result and transform them to a list of Objects
-   
+
     Args:
         articles_list: A list of dictionaries that contain sources details
-   
+
     Returns :
         articles_results: A list of source objects
     """
-    
+
     articles_results = []
     for article_item in articles_list:
         id = article_item.get('id')
@@ -104,7 +108,8 @@ def process_articles_results(articles_list):
         content = article_item.get('content')
 
         if urlToImage:
-            article_object = Articles(id, author, title, description, url, urlToImage, publishedAt, content)
+            article_object = Articles(
+                id, author, title, description, url, urlToImage, publishedAt, content)
             articles_results.append(article_object)
 
     return articles_results
