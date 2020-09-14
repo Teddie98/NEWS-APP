@@ -1,20 +1,16 @@
 import unittest
-from app.models import Sources
+from app.models import Source
 
-class SourcesTest(unittest.TestCase):
+class SourceTest(unittest.TestCase):
     '''
     Test Class to test the behaviour of the Source class
     '''
 
     def setUp(self):
         '''
-        Set up method that will run before every Test
+        Set up method thatt will run before every Test
         '''
-        self.new_source = Sources("abc-news","ABC News","Your trusted source for breaking news, analysis, exclusive interviews, headlines, and videos at ABCNews.com.","https://abcnews.go.com","general","en","us")
+        self.new_source = Source('Test id','Test name','Test description','Test categoty','Test language')
 
     def test_instance(self):
-        self.assertTrue(isinstance(self.new_source,Sources))
-
-
-if __name__ == '__main__':
-    unittest.main()
+        self.assertTrue(isinstance(self.new_source,Source))
