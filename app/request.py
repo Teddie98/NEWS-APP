@@ -1,5 +1,4 @@
-import urllib.request
-import json
+import urllib.request, json
 from .models import Sources, Articles
 
 
@@ -22,7 +21,7 @@ def get_sources(category):
     '''
     Function that gets the json response to our url request
     '''
-    get_sources_url = base_url.format(api_key)
+    get_sources_url = base_url.format(category, api_key)
 
     with urllib.request.urlopen(get_sources_url) as url:
         get_sources_data = url.read()
